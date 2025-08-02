@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Iklan Premium Christy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxtw6wEfB-ZjKUI12ieDF6qULvdRFYaN4mEL_sT-pRxiAMWEI-TlMXJSM&s=10')
+        center/cover no-repeat;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    .overlay h1 {
+      font-size: 3em;
+      font-weight: 600;
+      margin-bottom: 0.2em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .overlay p {
+      font-size: 1.2em;
+      opacity: 0.9;
+      margin-bottom: 1em;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="adOverlay">
+    <h1>Angelina “Christy”</h1>
+    <p>Peduli dan berbaik hati, siapa dia?</p>
+    <p><em>Klik di mana saja untuk penawaran spesial!</em></p>
+  </div>
+
+  <script>
+    // Daftar link iklan - tambah atau kurangin sesuka hati
+    const adLinks = [
+      "https://www.profitableratecpm.com/wd8e4eaq6q?key=442896404b1530931e22e312cb70c5ac",
+      "https://www.profitableratecpm.com/g4v5k2qm?key=f6dc4a69f143950f583fcbb40737f33b",
+      "https://www.profitableratecpm.com/u0wuhaudbx?key=be4c652d697df4817c583785054db930"
+    ];
+    
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    }
+
+    function setCookie(name, value, days=1) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/`;
+    }
+
+    function openAd() {
+      // Ambil index dari cookie, kalau ga ada mulai dari 0
+      let idx = parseInt(getCookie("adIndex")) || 0;
+      // Buka link iklan sesuai index
+      window.open(adLinks[idx], "_blank");
+      // Update index, balik ke 0 kalau udah sampai akhir
+      idx = (idx + 1) % adLinks.length;
+      setCookie("adIndex", idx);
+    }
+
+    // Cegah multiple click yang bikin bug
+    let isClicking = false;
+    document.addEventListener("click", function() {
+      if (!isClicking) {
+        isClicking = true;
+        openAd();
+        // Reset flag setelah sedikit delay biar ga double-click
+        setTimeout(() => { isClicking = false; }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
